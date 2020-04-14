@@ -11,7 +11,7 @@ import {
   Radio,
   ThemeProvider,
 } from "@material-ui/core";
-import { createMuiTheme, responsiveFontSizes } from "@material-ui/core/styles";
+import { createMuiTheme } from "@material-ui/core/styles";
 
 const theme = createMuiTheme();
 
@@ -54,75 +54,9 @@ const styles = (theme) =>
     },
   });
 
-const Questions = ({ classes, setPageNr, setResult }) => {
-  const [score, setScore] = useState([-1, -1, -1, -1, -1, -1, -1, -1]);
-  const onSubmit = () => {
-    console.log(score);
-    setResult(score.reduce((a, b) => a + b, 0));
-    setPageNr(4);
-  };
-  const handleChange = (answer, nr) => {
-    const newScore = [...score];
-    console.log(answer);
-    switch (nr) {
-      case 1:
-        {
-          newScore[nr] = answer === "yes" ? 2 : 0;
-          setScore(newScore);
-        }
-        break;
-      case 2:
-        {
-          newScore[nr] = answer === "yes" ? 2 : 0;
-          setScore(newScore);
-        }
-        break;
-      case 3:
-        {
-          newScore[nr] = answer === "yes" ? 1 : 0;
-          setScore(newScore);
-        }
-        break;
-      case 4:
-        {
-          newScore[nr] = 0;
-          setScore(newScore);
-        }
-        break;
-      case 5:
-        {
-          newScore[nr] = answer === "yes" ? 1 : 0;
-          setScore(newScore);
-        }
-        break;
-      case 6:
-        {
-          newScore[nr] = answer === "yes" ? 5 : 0;
-          setScore(newScore);
-        }
-        break;
-      case 7:
-        {
-          newScore[nr] = answer === "yes" ? 4 : 0;
-          setScore(newScore);
-        }
-        break;
-      case 8:
-        {
-          newScore[nr] = answer === "yes" ? 3 : 0;
-          setScore(newScore);
-        }
-        break;
-      default:
-        {
-          newScore[nr] = answer === "yes" ? 2 : 0;
-          setScore(newScore);
-        }
-        break;
-    }
-  };
-  const renderQuestions = () => {
-    const qs = [
+const Results = ({ classes, setPageNr, result }) => {
+  const renderResult = () => {
+    const rs = [
       "1- Is your body temperature higher than 38°C ?",
       "2- Do you have dry cough?",
       "3- Do you have a sore throat?",
@@ -133,7 +67,7 @@ const Questions = ({ classes, setPageNr, setResult }) => {
       "8- Have you visited a medical facility that had a confirmed COVID-19 case?",
       "9- Are you an employee in the medical sector or in quarantine?",
     ];
-    return qs.map((q, i) => (
+    return rs.map((q, i) => (
       <Box mt={6} key={i} className={classes.textColor}>
         <Grid
           container
@@ -144,10 +78,7 @@ const Questions = ({ classes, setPageNr, setResult }) => {
           <ThemeProvider theme={theme}>
             <Typography variant="h3">{q}</Typography>
           </ThemeProvider>
-          <RadioGroup
-            name="q1"
-            onChange={(e) => handleChange(e.target.value, q.split("-")[0])}
-          >
+          <RadioGroup name="q1" onChange={() => {}}>
             <FormControlLabel
               value="yes"
               control={<Radio style={{ color: "white" }} />}
@@ -165,7 +96,8 @@ const Questions = ({ classes, setPageNr, setResult }) => {
   };
   return (
     <div>
-      <Grid container direction="row" justify="center" alignItems="center">
+      {result}
+      {/* <Grid container direction="row" justify="center" alignItems="center">
         <Grid item xs={1}></Grid>
         <Grid
           item
@@ -186,7 +118,8 @@ const Questions = ({ classes, setPageNr, setResult }) => {
             </Box>
           </Grid>
 
-          {renderQuestions()}
+          {renderResult()}
+          {result}
           <Grid
             item
             xs
@@ -199,16 +132,16 @@ const Questions = ({ classes, setPageNr, setResult }) => {
               <Button
                 size="large"
                 className={`${classes.mainAction} ${classes.textColor} ${classes.startButton}`}
-                onClick={onSubmit}
+                onClick={() => setPageNr(4)}
               >
-                <Typography variant="h5">Check Results</Typography>
+                <Typography variant="h5">Okay</Typography>
               </Button>
             </Box>
           </Grid>
         </Grid>
-      </Grid>
+      </Grid> */}
     </div>
   );
 };
 
-export default withStyles(styles)(Questions);
+export default withStyles(styles)(Results);
